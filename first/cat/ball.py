@@ -1,61 +1,64 @@
 import pygame
-from pygame.locals import *
 import sys
+from pygame.locals import *
 
-
-FPS = 300 # frames per second setting
+pygame.init()
+FPS = 300
 fpsClock = pygame.time.Clock()
+size = (600, 400)
+screen = pygame.display.set_mode(size)
+pygame.display.set_caption('Animation')
 
-class Circle():
-    def __init__(self,a,b,c,d,e,f,g,h,i):
-        self.vel_x = a
-        self.vel_y = b
+class Circle(object):
+    def __init__(self, a, b, c, d, e, f, g, h, i, j, k):
+        self.v_x = a
+        self.v_y = b
         self.radius = c
-        self.pos_x = d
-        self.pos_y = e
+        self.p_x = d
+        self.p_y = e
         self.width = f
-        self.color = g, h, i
-
+        self.color = (g, h, i)
+        self.windowW = j
+        self.windowH = k
 
     def circle_run(self):
-        if self.pos_x > 580 or self.pos_x < 20:
-            self.vel_x = -self.vel_x
+        if self.p_x > (self.windowW-self.radius) or self.p_x < self.radius:
+            self.v_x = -self.v_x
 
-        if self.pos_y > 480 or self.pos_y < 20:
-            self.vel_y = -self.vel_y
-        self.pos_x += self.vel_x
-        self.pos_y += self.vel_y
-        pos = (self.pos_x, self.pos_y)
+        if self.p_y > (self.windowH-self.radius) or self.p_y < self.radius:
+            self.v_y = -self.v_y
+        self.p_x += self.v_x
+        self.p_y += self.v_y
+        pos = (self.p_x, self.p_y)
         pygame.draw.circle(screen, self.color, pos, self.radius, self.width)
 
 
-class Rect():
-    def __init__(self,a,b,c,d,e,f,g,h,i):
-        self.vel_x = a
-        self.vel_y = b
-        self.pos_x = c
-        self.pos_y = d
+class Rect(object):
+    def __init__(self, a, b, c, d, e, f, g, h, i, j, k):
+        self.v_x = a
+        self.v_y = b
+        self.p_x = c
+        self.p_y = d
         self.width = e
         self.height = f
-        self.color = g, h, i
-
+        self.color = (g, h, i)
+        self.windowW = j
+        self.windowH = k
     def rect_run(self):
-        if self.pos_x > 540 or self.pos_x < 0:
-            self.vel_x = -self.vel_x
+        if self.p_x > (self.windowW-self.width) or self.p_x < 0:
+            self.v_x = -self.v_x
 
-        if self.pos_y > 460 or self.pos_y < 0:
-            self.vel_y = -self.vel_y
-        self.pos_x += self.vel_x
-        self.pos_y += self.vel_y
-        list = (self.pos_x, self.pos_y, self.width, self.height)
+        if self.p_y > (self.windowH-self.height) or self.p_y < 0:
+            self.v_y = -self.v_y
+        self.p_x += self.v_x
+        self.p_y += self.v_y
+        list = (self.p_x, self.p_y, self.width, self.height)
         pygame.draw.rect(screen, self.color, list, 0)
 
-pygame.init()
-screen = pygame.display.set_mode((600, 500))
 
-circle1 = Circle(-1,1,20,77,77,0,128,128,0)
-rect1 = Rect(1,-1,250,150,60,40,128,0,128)
-rect2 = Rect(1,1,148,136,80,20,225,0,0)
+circle1 = Circle(-1, 1, 20, 77, 77, 0, 128, 128, 0, size[0], size[1])
+rect1 = Rect(1, -1, 250, 150, 60, 40, 128, 0, 128, size[0], size[1])
+rect2 = Rect(1, 1, 148, 136, 80, 20, 225, 0, 0, size[0], size[1])
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:

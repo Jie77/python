@@ -1,69 +1,56 @@
-import pygame, sys
+import pygame
+import sys
 from pygame.locals import *
 
 pygame.init()
-
-FPS = 60 # frames per second setting
+FPS = 60
 fpsClock = pygame.time.Clock()
-
-# set up the window
-DISPLAYSURF = pygame.display.set_mode((800, 600), 0, 32)
+size = (800, 500)
+screen = pygame.display.set_mode(size)
 pygame.display.set_caption('Animation')
 
-WHITE = (255, 255, 255)
-catImg = pygame.image.load('cat.png')
-mouseImg = pygame.image.load('mouse.png')
-catx = 10
-caty = 10
-mousex = 180
-mousey = 15
-directioncat = 'right'
-directionmouse = 'right'
+class Animal(object):
+    def __init__(self, source, x, y, W, H):
+        self.source = source
+        self.x = x
+        self.y = y
+        self.direction = 'right'
+        self.W = W
+        self.H = H
+    def run(self):
+        if self.direction == 'right':
+            self.x += 5
+            if self.x == self.W-150:
+                self.direction = 'down'
+        elif self.direction == 'down':
+            self.y += 5
+            if self.y == self.H-120:
+                self.direction = 'left'
+        elif self.direction == 'left':
+            self.x -= 5
+            if self.x == 30:
+                self.direction = 'up'
+        elif self.direction == 'up':
+            self.y -= 5
+            if self.y == 30:
+                self.direction = 'right'
+        catImg = pygame.image.load(self.source)
+        pos = (self.x,self.y)
+        screen.blit(catImg, pos)
 
-while True: # the main game loop
-    DISPLAYSURF.fill(WHITE)
+cat = Animal('cat.png', 10, 10, size[0], size[1])
+mouse = Animal('mouse.png', 180, 15, size[0], size[1])
 
-    if directioncat == 'right':
-        catx += 5
-        if catx == 650:
-            directioncat = 'down'
-    elif directioncat == 'down':
-        caty += 5
-        if caty == 480:
-            directioncat = 'left'
-    elif directioncat == 'left':
-        catx -= 5
-        if catx == 30:
-            directioncat = 'up'
-    elif directioncat == 'up':
-        caty -= 5
-        if caty == 30:
-            directioncat = 'right'
-
-    if directionmouse == 'right':
-        mousex += 5
-        if mousex == 650:
-            directionmouse = 'down'
-    elif directionmouse == 'down':
-        mousey += 5
-        if mousey == 480:
-            directionmouse = 'left'
-    elif directionmouse == 'left':
-        mousex -= 5
-        if mousex == 30:
-            directionmouse = 'up'
-    elif directionmouse == 'up':
-        mousey -= 5
-        if mousey == 30:
-            directionmouse = 'right'
-
-    DISPLAYSURF.blit(catImg, (catx, caty))
-    DISPLAYSURF.blit(mouseImg, (mousex, mousey))
-
+while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+
+    screen.fill((255, 255, 255))
+
+    cat.run()
+    mouse.run()
 
     pygame.display.update()
     fpsClock.tick(FPS)
