@@ -34,9 +34,9 @@ class Animal(object):
             self.y -= 5
             if self.y == 30:
                 self.direction = 'right'
-        catImg = pygame.image.load(self.source)
-        pos = (self.x,self.y)
-        screen.blit(catImg, pos)
+        Img = pygame.image.load(self.source)
+        pos = (self.x, self.y)
+        screen.blit(Img, pos)
 
 cat = Animal('cat.png', 10, 10, size[0], size[1])
 mouse = Animal('mouse.png', 180, 15, size[0], size[1])
