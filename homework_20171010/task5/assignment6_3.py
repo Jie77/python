@@ -22,11 +22,6 @@ for i in range(n):
            str += '*'
            num = num-1
     else:
-        # num = n-i
-        # str += '*'
-        # for j in range(num-2):
-        #     str += " "
-        # str += '*'
         for j in range(n-i):
             if j == 0 or j == n-i-1:
                 str += '*'
